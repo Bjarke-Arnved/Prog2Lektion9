@@ -24,6 +24,9 @@ class Program {
         System.out.println(ringOfStrings.getCurrentItem());
         System.out.println(ringOfStrings.size());
         System.out.println(ringOfStrings.isEmpty());
+        ArrayListRing<String> ringOfStringsv02 = new ArrayListRing<String>();
+        // Test of the EmptyRingException:
+        //ringOfStringsv02.getCurrentItem();
     }
 }
 public class ArrayListRing<T> implements Ring<T>{
