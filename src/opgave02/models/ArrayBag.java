@@ -37,42 +37,105 @@ public class ArrayBag<E> implements Bag<E> {
 
     @Override
     public boolean add(E newEntry) {
-        // TODO
-        return false;
+        boolean itemAdded = false;
+        int i = 0;
+        if(!isFull()) {
+            while(i <= items.length - 1 && !itemAdded) {
+                if(items[i] == null) {
+                    items[i] = newEntry;
+                    itemAdded = true;
+                    size++;
+                }
+                else {
+                    i++;
+                }
+            }
+        }
+        return itemAdded;
     }
 
     @Override
     public E remove() {
-        // TODO
-        return null;
+        E item = null;
+        int i = items.length - 1;
+        while(i >= 0 && item == null) {
+            if(items[i] != null) {
+                item = items[i];
+                items[i] = null;
+                size--;
+            }
+            i--;
+        }
+        return item;
     }
 
     @Override
     public boolean remove(E anEntry) {
-        // TODO
-        return false;
+        boolean isThere = false;
+        for(int i = 0; i < items.length - 1; i++) {
+            if(items[i] == anEntry) {
+                items[i] = null;
+                isThere = true;
+                size--;
+            }
+        }
+        return isThere;
     }
 
     @Override
     public void clear() {
-        // TODO
+        for(int i = 0; i < items.length - 1; i++) {
+            items[i] = null;
+        }
+        size = 0;
     }
 
     @Override
     public int getFrequencyOf(E anEntry) {
-        // TODO
-        return 0;
+        int count = 0;
+        for(int i = 0; i < items.length - 1; i++) {
+            if(items[i] == anEntry) {
+                count++;
+            }
+        }
+        return count;
     }
 
     @Override
     public boolean contains(E anEntry) {
-        // TODO
-        return false;
+        boolean isFound = false;
+        for(int i = 0; i < items.length - 1; i++) {
+            if(items[i] == anEntry) {
+                isFound = true;
+                i = items.length;
+            }
+        }
+        return isFound;
     }
 
     @Override
     public E[] toArray() {
-        // TODO
-        return null;
+        int count = 0;
+        E[] newBag;
+        if(!isFull()) {
+            for(int i = 0; i < items.length - 1; i++) {
+                if(items[i] == null) {
+                }
+                count++;
+            }
+        }
+        else {
+            count = size;
+        }
+        newBag = (E[])new Object[count];
+        int eIndex = 0;
+        for(int i = 0; i < items.length - 1; i++) {
+            if(items[i] != null) {
+                newBag[eIndex] = items[i];
+                eIndex++;
+            }
+        }
+        return newBag;
     }
+
 }
