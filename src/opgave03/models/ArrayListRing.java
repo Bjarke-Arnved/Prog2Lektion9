@@ -1,6 +1,9 @@
 package opgave03.models;
 
 import java.util.ArrayList;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 class Program {
     public static void main(String[] args) {
         ArrayListRing<String> ringOfStrings = new ArrayListRing<String>();
@@ -14,6 +17,7 @@ class Program {
         ringOfStrings.add("Peregrin");
         ringOfStrings.add("Mariadoc");
         ringOfStrings.add("Boromir");
+        //ringOfStrings.map(a -> "Mr. " + a);
         System.out.println(ringOfStrings.getCurrentItem());
         ringOfStrings.advance();
         System.out.println(ringOfStrings.getCurrentItem());
@@ -25,6 +29,8 @@ class Program {
         System.out.println(ringOfStrings.size());
         System.out.println(ringOfStrings.isEmpty());
         ArrayListRing<String> ringOfStringsv02 = new ArrayListRing<String>();
+        Ring<String> ringB = ringOfStrings.where(a -> a.startsWith("G"));
+        System.out.println(ringB.size());
         // Test of the EmptyRingException:
         //ringOfStringsv02.getCurrentItem();
     }
@@ -44,7 +50,7 @@ public class ArrayListRing<T> implements Ring<T>{
     // Check
     @Override
     public void add(T item) {
-        ringItems.add(item);
+        ringItems.addFirst(item);
     }
     // Check
     @Override
@@ -74,4 +80,22 @@ public class ArrayListRing<T> implements Ring<T>{
         removeCurrentItem();
         ringItems.add(item);
     }
+
+    public void map(Function<T, T> function) {
+        for(int i = 0; i < ringItems.size(); i++) {
+            ringItems.set(i,function.apply(ringItems.get(i)));
+        }
+    }
+
+    @Override
+    public Ring<T> where(Predicate<T> predicate) {
+        Ring<T> ring = new ArrayListRing<T>();
+        for (T ringItem : ringItems) {
+            if(predicate.test(ringItem)) {
+                ring.add(ringItem);
+            }
+        }
+        return ring;
+    }
+
 }
